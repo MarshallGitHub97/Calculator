@@ -6,6 +6,7 @@ let operator = "";
 let newNumber = 0;
 let savedNumber = 0;
 let operatorAlreadyUsed = false;
+let resultIsShown = false;
 
 button.forEach((element) => {
   element.addEventListener("click", (e) => {
@@ -13,6 +14,12 @@ button.forEach((element) => {
     let clickedValue = e.target.innerHTML;
 
     if (className == "number") {
+      if (resultIsShown) {
+        console.log(resultIsShown);
+        result = "";
+        newNumber = 0;
+        resultIsShown = false;
+      }
       newNumber += clickedValue.toString();
       console.log(newNumber);
 
@@ -34,9 +41,12 @@ button.forEach((element) => {
         console.log(`Saved Number: ${savedNumber}`);
 
         result = operate(operator, savedNumber, newNumber);
+        let decimalResult = result;
+        result = round(decimalResult, 4);
         newNumber = result;
         operator = "";
         operatorAlreadyUsed = false;
+        resultIsShown = true;
       } else if (operatorAlreadyUsed) {
         if (newNumber === undefined || newNumber === "") {
           operator = clickedValue;
@@ -47,6 +57,7 @@ button.forEach((element) => {
           newNumber = "";
           operator = clickedValue;
           operatorAlreadyUsed = true;
+          //resultIsShown = true;
           result += operator;
         }
       } else {
@@ -54,6 +65,7 @@ button.forEach((element) => {
         newNumber = "";
         operator = clickedValue;
         operatorAlreadyUsed = true;
+        resultIsShown = false;
       }
     } else if (className == "system") {
       result = "";
@@ -64,6 +76,11 @@ button.forEach((element) => {
     updateResult(result);
   });
 });
+
+function round(value, precision) {
+  var multiplier = Math.pow(10, precision || 0);
+  return Math.round(value * multiplier) / multiplier;
+}
 
 function updateResult(result) {
   resultText.innerHTML = result;
