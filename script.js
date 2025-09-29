@@ -15,13 +15,15 @@ button.forEach((element) => {
 
     if (className == "number") {
       if (resultIsShown) {
-        console.log(resultIsShown);
         result = "";
         newNumber = 0;
         resultIsShown = false;
       }
+      if (clickedValue === "." && newNumber.toString().includes(".")) {
+        clickedValue = "";
+      }
+
       newNumber += clickedValue.toString();
-      console.log(newNumber);
 
       if (result == 0) {
         result = clickedValue.toString();
@@ -36,10 +38,6 @@ button.forEach((element) => {
       newNumber = Number(newNumber);
 
       if (clickedValue === "=") {
-        console.log(`Operator: ${operator}`);
-        console.log(`New Number: ${newNumber}`);
-        console.log(`Saved Number: ${savedNumber}`);
-
         result = operate(operator, savedNumber, newNumber);
         let decimalResult = result;
         result = round(decimalResult, 4);
@@ -68,11 +66,22 @@ button.forEach((element) => {
         resultIsShown = false;
       }
     } else if (className == "system") {
-      result = "";
-      operatorAlreadyUsed = false;
+      if (clickedValue === "AC") {
+        result = "";
+        operatorAlreadyUsed = false;
+      }
+      console.log(clickedValue);
+      if (clickedValue === "D") {
+        clickedValue = "";
+        result = result.toString();
+        console.log(result);
+        console.log(typeof result);
+
+        result = result.slice(0, result.length - 1);
+        newNumber = result;
+      }
     } else {
     }
-    console.log(result);
     updateResult(result);
   });
 });

@@ -66,3 +66,9 @@
   flex-wrap: wrap;
   gap: 8px;
 }
+
+/* #disableDotButton,
+#disableDotButton:hover,
+#disableDotButton:active {
+  background-color: #8f8f8f;
+} */
